@@ -8,7 +8,7 @@ class Array
         if arr1[index].nil? or arr1[index] == arr2[index]
           value
         else
-          LocaleSync.tag_updated(value.to_s, arr2[index])
+          AwesomeLocaleSync::AwesomeLocaleSync.tag_updated(value.to_s, arr2[index])
         end
       end
     end

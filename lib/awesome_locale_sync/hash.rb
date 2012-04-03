@@ -6,9 +6,7 @@ class Hash
         copy[key] = value.prune_leafs(leaf_value, append)
       elsif value.is_a? Array
         copy[key] = value.prune_leafs(leaf_value, append)
-      elsif value.is_a? Symbol
-        copy[key] = copy[key]
-      else
+      elsif not value.is_a? Symbol
         if append
           copy[key] = copy[key].to_s + leaf_value
         else
@@ -27,10 +25,8 @@ class Hash
       elsif value.is_a? Array
         copy[key] = copy[key].detect_diff(base_hash[key], default_hash[key])
       else
-        if base_hash[key] == default_hash[key] or base_hash[key].nil?
-          copy[key] = copy[key]
-        else
-          copy[key] = LocaleSync.tag_updated(copy[key], default_hash[key])
+        unless base_hash[key] == default_hash[key] or base_hash[key].nil?
+          copy[key] = AwesomeLocaleSync::AwesomeLocaleSync.tag_updated(copy[key], default_hash[key])
         end
       end
     end
@@ -72,5 +68,14 @@ class Hash
     copy = self.deep_dup
     copy.deep_stringify_keys!
     copy
+  end
+
+  def deep_dup
+    duplicate = self.dup
+    duplicate.each_pair do |k,v|
+      tv = duplicate[k]
+      duplicate[k] = tv.is_a?(Hash) && v.is_a?(Hash) ? tv.deep_dup : v
+    end
+    duplicate
   end
 end

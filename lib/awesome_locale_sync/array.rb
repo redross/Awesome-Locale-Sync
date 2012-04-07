@@ -21,6 +21,10 @@ class Array
         el.prune_leafs(value, append)
       elsif el.is_a? Symbol
         el
+      elsif el.is_a? Integer
+        el
+      elsif el.is_a? TrueClass or el.is_a? FalseClass
+        el
       else
         if append
           el.to_s + value

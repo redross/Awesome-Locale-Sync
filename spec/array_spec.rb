@@ -43,6 +43,18 @@ describe 'Array enhancements' do
         @test_array.prune_leafs('!', true).should == ['ratai!', 'zoles!', ['ziemos!', 'dangus!'], :test]
       end
 
+      it 'should not modify integers' do
+        @test_array << 5
+        @test_array.prune_leafs('!', false).should == ['!', '!', ['!', '!'], 5]
+        @test_array.prune_leafs('!', true).should == ['ratai!', 'zoles!', ['ziemos!', 'dangus!'], 5]
+      end
+
+      it 'should not modify booleans' do
+        @test_array << true
+        @test_array.prune_leafs('!', false).should == ['!', '!', ['!', '!'], true]
+        @test_array.prune_leafs('!', true).should == ['ratai!', 'zoles!', ['ziemos!', 'dangus!'], true]
+      end
+
       describe 'not appending' do
         it 'should replace elements with nils' do
           @test_array.prune_leafs('!', false).should == ['!', '!', ['!', '!']]
@@ -50,10 +62,6 @@ describe 'Array enhancements' do
       end
 
       describe 'appending' do
-        it 'should add value to all array values' do
-          @test_array.prune_leafs('!', true).should == ['ratai!', 'zoles!', ['ziemos!', 'dangus!']]
-        end
-
         it 'should not modify source array' do
           expect {
             @test_array.prune_leafs('!', true)

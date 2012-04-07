@@ -6,7 +6,7 @@ class Hash
         copy[key] = value.prune_leafs(leaf_value, append)
       elsif value.is_a? Array
         copy[key] = value.prune_leafs(leaf_value, append)
-      elsif not value.is_a? Symbol
+      elsif not ((value.is_a? Symbol) || (value.is_a? Integer) || (value.is_a? TrueClass) || (value.is_a? FalseClass))
         if append
           copy[key] = copy[key].to_s + leaf_value
         else

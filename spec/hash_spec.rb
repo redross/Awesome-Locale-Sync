@@ -23,10 +23,24 @@ describe 'Hash enhancements' do
                                                         kariasi: 'hey',
                                                         lyja: {pavasario: ['hey', 'hey'], keliasi: 'hey'}, aukstais: :austa}
       end
+
+      it 'should not modify integer values' do
+        @base_hash[:aukstais] = 2
+        @base_hash.prune_leafs('hey', false).should == {isdege: 'hey',
+                                                        kariasi: 'hey',
+                                                        lyja: {pavasario: ['hey', 'hey'], keliasi: 'hey'}, aukstais: 2}
+      end
+
+      it 'should not modify boolean values' do
+        @base_hash[:aukstais] = true
+        @base_hash.prune_leafs('hey', false).should == {isdege: 'hey',
+                                                        kariasi: 'hey',
+                                                        lyja: {pavasario: ['hey', 'hey'], keliasi: 'hey'}, aukstais: true}
+      end
     end
 
     describe 'append' do
-      it 'should set append to all leaf values a specified value' do
+      it 'should append to all leaf values a specified value' do
         @base_hash.prune_leafs('!', true).should == {isdege: 'pugos!',
                                                      kariasi: 'zodziai!',
                                                      lyja: {pavasario: ['lietus!', 'nuobodziai!'], keliasi: 'dangus!'}}

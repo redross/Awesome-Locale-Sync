@@ -1,6 +1,6 @@
 namespace :locales do
   desc 'Sync locales'
   task :sync => :environment do
-    LocaleSync.new.sync
+    AwesomeLocaleSync::AwesomeLocaleSync.new.sync
   end
 end

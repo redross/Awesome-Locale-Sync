@@ -13,9 +13,11 @@ module AwesomeLocaleSync
     end
 
     def init_base_locale(options = {})
-      base_locale_file = Rails.root.join('config', 'locales', 'base_locale', 'base.yml')
+      base_locale_file = options[:base_locale_file] || Rails.root.join('config', 'locales', 'base_locale', 'base.yml')
       unless FileTest.exists?(base_locale_file) and not options[:reset]
         puts "Refreshing base locale file"
+        FileUtils.mkdir_p(File.dirname(base_locale_file))
+
         base_hash = {'base' => default_translations }
         File.open(base_locale_file, 'w') do |file|
           file.write(base_hash.to_yaml)

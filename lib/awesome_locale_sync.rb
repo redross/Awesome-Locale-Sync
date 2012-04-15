@@ -4,7 +4,7 @@ require "awesome_locale_sync/version"
 require "awesome_locale_sync/hash"
 require "awesome_locale_sync/array"
 require "awesome_locale_sync/ya2yaml"
-Dir["tasks/**/*.rake"].each { |ext| load ext } if defined?(Rake)
+require 'awesome_locale_sync/railtie' if defined?(Rails)
 
 module AwesomeLocaleSync
   class AwesomeLocaleSync
